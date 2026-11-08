@@ -1,61 +1,84 @@
-import pyJPListe
+import sys
+from SinglyLinkedList import SinglyLinkedList
 
-# Prikaz izbornika i izbor prve vrijednosti
-print("     ** TESTNI PROGRAM ZA pyJPListe **     ")
-print("-------------------Menu--------------------")
-print("1. Idi na prethodni")
-print("2. Idi na sljedeći")
-print("3. Idi na početak")
-print("4. Idi na kraj")
-print("5. Idi na poziciju")
-print("6. Dodavanje elementa na kraj liste")
-print("7. Umetanje elementa na tekuću poziciju")
-print("8. Izbacivanje tekućeg elementa")
-print("9. Ispis vrijednost tekućeg elementa")
-print("10. Prikaži sadržaj liste")
-print("99. Izlaz")
-unos_izbora = input("------------Izaberite opciju?-------------\n")
-izbor = int(unos_izbora)
 
-# Iniciranje objekta Liste sa kapacitetom k
-# k = 10 --> Kapacitet JP Lista je "neograničen"
-Lista = pyJPListe.JPlista()
+def display_menu():
+    print("\n     ** TEST PROGRAM FOR SinglyLinkedList **")
+    print("-------------------Menu--------------------")
+    print("1.  Go to previous")
+    print("2.  Go to next")
+    print("3.  Go to start")
+    print("4.  Go to end")
+    print("5.  Go to position")
+    print("6.  Add element to end of list")
+    print("7.  Insert element at current position")
+    print("8.  Remove current element")
+    print("9.  Print current element value")
+    print("10. Display list contents")
+    print("11. Print even elements")
+    print("12. Print odd elements")
+    print("13. Print difference between even and odd elements")
+    print("99. Exit")
+    print("----------------------------------------------------")
 
-# Definicija logike izbornika za pojedine funkcije strukture
-def menu(izbor):
-    match izbor:
-        case 1:
-            Lista.idiNaPrethodni()
-        case 2:
-            Lista.idiNaSljedeci()
-        case 3:
-            Lista.idiNaPocetak()
-        case 4:
-            Lista.idiNaKraj()
-        case 5:
-            pozicija = input("Unesite poziciju za dislokaciju pokazivača tekući!\n")
-            Lista.idiNaPoziciju(int(pozicija))
-        case 6:
-            x = input("Unesite vrijednost elementa!\n")
-            Lista.dodaj(x)
-        case 7:
-            x = input("Unesite vrijednost elementa!\n")
-            Lista.umetni(x)
-        case 8:
-            Lista.izbaci()
-        case 9:
-            Lista.ispisiTekuci()
-        case 10:
-            print("** ELEMENTI U LISTI **")
-            Lista.prikazi()
-        case 99:
-            print("Program završen!\n")
-            exit()
-        case _:
-            print("Pogrešan izbor. Molimo ponovite unos izbora!")
 
-# Petlja za ponavlejnje izbora do unosa izlaza
-while (izbor):
-    menu(izbor)
-    unos_izbora = input("------------Izaberite opciju?-------------\n")
-    izbor = int(unos_izbora)
+def main():
+    my_list = SinglyLinkedList()
+
+    while True:
+        display_menu()
+        try:
+            choice = int(input("Select an option: "))
+        except ValueError:
+            print("Invalid input! Please enter a valid number.")
+            continue
+
+        match choice:
+            case 1:
+                my_list.move_to_previous()
+            case 2:
+                my_list.move_to_next()
+            case 3:
+                my_list.move_to_start()
+            case 4:
+                my_list.move_to_end()
+            case 5:
+                try:
+                    position = int(input("Enter position to move current pointer:\n"))
+                    my_list.move_to_position(position)
+                except ValueError:
+                    print("Position must be an integer!")
+            case 6:
+                try:
+                    value = int(input("Enter element value to add:\n"))
+                    my_list.add(value)
+                except ValueError:
+                    print("Value must be an integer!")
+            case 7:
+                try:
+                    value = int(input("Enter element value to insert:\n"))
+                    my_list.insert(value)
+                except ValueError:
+                    print("Value must be an integer!")
+            case 8:
+                my_list.remove()
+            case 9:
+                my_list.print_current()
+            case 10:
+                print("\n** LIST ELEMENTS **")
+                my_list.display()
+            case 11:
+                my_list.print_even()
+            case 12:
+                my_list.print_odd()
+            case 13:
+                my_list.difference()
+            case 99:
+                print("Program terminated!\n")
+                sys.exit()
+            case _:
+                print("Invalid choice. Please try again!")
+
+
+if __name__ == "__main__":
+    main()

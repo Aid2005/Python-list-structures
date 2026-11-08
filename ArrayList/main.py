@@ -1,64 +1,82 @@
+import sys
+from ArrayList import ArrayList
 
-import pyNizListe
 
-# Prikaz izbornika
-print("      ** TESTNI PROGRAM ZA pyListe **")
-print("-------------------Menu--------------------")
-print("1. Idi na početak")
-print("2. idi na kraj")
-print("3. Idi na prethodni")
-print("4. Idi na sljedeći")
-print("5. Idi na poziciju")
-print("6. Dodavanje elemenata na kraj liste")
-print("7. Umetanje elmenta na tekuću poziciju")
-print("8. Izbacivanje tekućeg elementa")
-print("9. Ispis vrijednosti tekućeg elementa")
-print("10. Prikaz sadržaja liste")
-print("99. Izlaz")
+def display_menu():
+    print("\n      ** TEST PROGRAM FOR ArrayList **")
+    print("-------------------Menu--------------------")
+    print("1.  Go to start")
+    print("2.  Go to end")
+    print("3.  Go to previous")
+    print("4.  Go to next")
+    print("5.  Go to position")
+    print("6.  Add element to end of list")
+    print("7.  Insert element at current position")
+    print("8.  Remove current element")
+    print("9.  Print current element value")
+    print("10. Display list contents")
+    print("11. Print even elements")
+    print("12. Print odd elements")
+    print("99. Exit")
+    print("----------------------------------------------------")
 
-unos_izbor = input("--------------Izaberite opciju?---------------\n")
-izbor = int(unos_izbor)
 
-# Iniciranje objekata Liste sa kapacitetom k
-k = 10
-Lista = pyNizListe.NizLista(k)
+def main():
+    capacity = 10
+    my_list = ArrayList(capacity)
 
-# Funkcija izbornika
-def menu(izbor):
-    match izbor:
-        case 1:
-            Lista.idiNaPocetak()
-        case 2:
-            Lista.idiNaKraj()
-        case 3:
-            Lista.idiNaPrethodni()
-        case 4:
-            Lista.idiNaSljedeci()
-        case 5:
-            pozicija = input("Unesite poziciju za dislokaciju pokazivača tekući!\n")
-            Lista.idiNaPoziciju(int(pozicija))
-        case 6:
-            x = int(input("Unesite vrijednost elementa!\n"))
-            Lista.dodaj(x)
-        case 7:
-            x = input("Unesite vrijednost elementa!\n")
-            Lista.umetni(x)
-        case 8:
-            Lista.izbaci()
-        case 9:
-            Lista.ispisiTekuci()
-        case 10:
-            print("** ELEMENTI U LISTI **")
-            Lista.prikazi()
-        case 99:
-            print("Program završen!\n")
-            exit()
-        case _:
-            print("Pogrešan izbor. Molimo ponovite unos izbora!")
+    while True:
+        display_menu()
+        try:
+            choice = int(input("Select an option: "))
+        except ValueError:
+            print("Invalid input! Please enter a valid number.")
+            continue
 
-# Petlja, while, dok god postoji unos izbora
-while (izbor):
-    menu(izbor)
-    unos_izbor = input("--------------Izaberite opciju?---------------\n")
-    izbor = int(unos_izbor)
+        match choice:
+            case 1:
+                my_list.move_to_start()
+            case 2:
+                my_list.move_to_end()
+            case 3:
+                my_list.move_to_previous()
+            case 4:
+                my_list.move_to_next()
+            case 5:
+                try:
+                    position = int(input("Enter position to move current pointer:\n"))
+                    my_list.move_to_position(position)
+                except ValueError:
+                    print("Position must be an integer!")
+            case 6:
+                try:
+                    value = int(input("Enter element value to add:\n"))
+                    my_list.add(value)
+                except ValueError:
+                    print("Value must be an integer!")
+            case 7:
+                try:
+                    value = int(input("Enter element value to insert:\n"))
+                    my_list.insert(value)
+                except ValueError:
+                    print("Value must be an integer!")
+            case 8:
+                my_list.remove()
+            case 9:
+                my_list.print_current()
+            case 10:
+                print("\n** LIST ELEMENTS **")
+                my_list.display()
+            case 11:
+                my_list.print_even()
+            case 12:
+                my_list.print_odd()
+            case 99:
+                print("Program terminated!\n")
+                sys.exit()
+            case _:
+                print("Invalid choice. Please try again!")
 
+
+if __name__ == "__main__":
+    main()
